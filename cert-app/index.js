@@ -42,6 +42,10 @@ app.get('/FEDGOKOSA/certifcate/apply', (req, res) => {
   res.render('applicant-form')
 })
 
+app.get('/admin/dashboard', (req, res) => {
+  res.render('dashboard')
+})
+
 //app.use('/api/certificates', certificateRoutes);
 
 app.listen(PORT, () => {

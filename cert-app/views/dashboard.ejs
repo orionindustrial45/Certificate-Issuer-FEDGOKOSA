@@ -40,10 +40,56 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="scripts.js"></script>
   <script>
-    // Check if table is empty and show message accordingly
     $(document).ready(function() {
-      checkIfTableEmpty();
+      fetchData(); // Fetch data initially
+      $('#searchInput').on('input', function() {
+        var searchTerm = $(this).val().toLowerCase(); // Get the search term
+        fetchData(searchTerm); // Fetch data with the search term
+      });
     });
+
+    function fetchData(searchTerm = '') {
+      // Make a GET request to your API endpoint with the search term as a query parameter
+      $.ajax({
+        url: '/api/user/get-applicants',
+        method: 'GET',
+        data: { searchTerm: searchTerm }, // Pass the search term as a query parameter
+        success: function(response) {
+          if (response.success) {
+            populateTable(response.applicants); // Populate the table with fetched data
+          } else {
+            console.error('Error: Request was not successful');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+    }
+
+    function populateTable(applicants) {
+      // Clear existing table rows
+      $('#applicantTable').empty();
+
+      // Loop through fetched data and populate table rows
+      applicants.forEach(function(applicant) {
+        var row = '<tr>' +
+                  '<td>' + applicant.firstName + ' ' + applicant.lastName + '</td>' +
+                  '<td>' + formatDate(applicant.createdAt) + '</td>' +
+                  '<td>' + applicant.graduationYear + '</td>' +
+                  '<td><button class="btn btn-primary" style="background-color: #168E85 !important;">Approve</button></td>' +
+                  '</tr>';
+        $('#applicantTable').append(row);
+      });
+
+      // Show/hide message based on table content
+      checkIfTableEmpty();
+    }
+
+    function formatDate(dateString) {
+      var date = new Date(dateString);
+      return date.toLocaleDateString(); // Change the format as needed
+    }
 
     function checkIfTableEmpty() {
       var tableRows = $('#applicantTable tr').length;

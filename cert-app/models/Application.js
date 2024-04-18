@@ -27,7 +27,7 @@ const applicationSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'approved', 'rejected'],
+    enum: ['pending', 'approved', 'issued', 'rejected'],
     default: 'pending'
   },
   approvalDate: {

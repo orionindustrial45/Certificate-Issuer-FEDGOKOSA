@@ -195,9 +195,10 @@ export const issueCertificate = async (req, res) => {
     // Send email
     await transporter.sendMail(mailOptions);
 
-
+    application.status = 'issued';
+    const issueData = await application.save();
     // Respond with success message
-    res.status(200).json({ success: true, message: 'Certificate issued successfully' });
+    res.status(200).json({ success: true, message: 'Certificate issued successfully', data: issueData });
   } catch (error) {
     console.error(error);
     // If an error occurs, respond with error message

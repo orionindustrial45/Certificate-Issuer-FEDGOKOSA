@@ -29,13 +29,26 @@ export const createApplication = async (req, res) => {
   }
 };
 
- // Controller function to retrieve a list of approved applicants
- export const getApplicants = async (req, res) => {
+ // Controller function to retrieve a list of applicants with optional search functionality
+export const getApplicants = async (req, res) => {
   try {
-    // Find all applications with status "approved"
-    const applicants = await Application.find({ status: 'pending' });
+    const { searchTerm } = req.query; // Get the search term from the request query parameters
 
-    // Respond with the list of approved applicants
+    // Build the query to find applicants with status "pending" and optionally matching the search term
+    const query = { status: 'pending' };
+    
+    // If a search term is provided, add search criteria to the query
+    if (searchTerm) {
+      query.$or = [
+        { firstName: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive match for first name
+        { lastName: { $regex: searchTerm, $options: 'i' } }   // Case-insensitive match for last name
+      ];
+    }
+
+    // Find applicants that match the query
+    const applicants = await Application.find(query);
+
+    // Respond with the list of matching applicants
     res.status(200).json({ success: true, applicants });
   } catch (error) {
     console.error(error);
