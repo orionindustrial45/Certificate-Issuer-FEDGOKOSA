@@ -3,6 +3,7 @@ import QRCode from 'qrcode';
 import PDFKit from 'pdfkit';
 import PDFImage from 'pdf-image';
 import fs from 'fs';
+import deleteCert from 'fs-extra';
 import path from 'path';
 import Application from '../models/Application.js';
 import transporter from '../config/nodemailerConfig.js';
@@ -194,6 +195,8 @@ export const issueCertificate = async (req, res) => {
 
     // Send email
     await transporter.sendMail(mailOptions);
+
+    deleteCert.unlink(certificatePath);
 
     application.status = 'issued';
     const issueData = await application.save();
