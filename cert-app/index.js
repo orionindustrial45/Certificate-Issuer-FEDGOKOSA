@@ -7,6 +7,7 @@ import applicationRoutes from './routes/applicationRoutes.js'
 import issueCertificate from  './routes/certificateRoutes.js'
 import connectDB from './config/db.js';
 import passportConfig from './config/passportConfig.js';
+import { getApplicants } from './controllers/applicationController.js';
 
 
 //import certificateRoutes from './routes/certificateRoutes.js';
@@ -38,11 +39,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/user', applicationRoutes);
 app.use('/api', issueCertificate)
 
-app.get('/FEDGOKOSA/certifcate/apply', (req, res) => {
+app.get('/FEDGOKOSA/certifcate/apply', async (req, res) => {
   res.render('applicant-form')
 })
 
-app.get('/admin/dashboard', (req, res) => {
+app.get('/admin/dashboard', async (req, res) => {
   res.render('dashboard')
 })
 

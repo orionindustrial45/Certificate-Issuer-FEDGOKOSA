@@ -99,14 +99,14 @@ export const issueCertificate = async (req, res) => {
     // Find the application by ID
     const application = await Application.findById(id);
 
-    if (!application || application.status !== 'approved') {
+    if (!application) { //|| application.status !== 'approved') {
       return res.status(404).json({ success: false, message: 'Application not found or not approved' });
     }
 
     // Create a PDF document
     const pdfDoc = new PDFKit();
     const certificatePath = path.join(__dirname, '..', 'certificates', `${application._id}.pdf`);
-    const qrCodeData = `Name: ${application.firstName} ${application.otherName} ${application.lastName}\nGraduation Year: ${application.graduationYear}`;
+    const qrCodeData = `FEDGOKOSA- Genuine Certificate\n Name: ${application.firstName} ${application.otherName} ${application.lastName}\nGraduation Year: ${application.graduationYear}`;
 
     // Generate QR code
     const qrCodeImage = await QRCode.toDataURL(qrCodeData);

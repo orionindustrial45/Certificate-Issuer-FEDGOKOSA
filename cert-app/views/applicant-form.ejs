@@ -53,7 +53,7 @@
           Application Sent
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #168E85 !important;">Close</button>
         </div>
       </div>
     </div>
@@ -87,7 +87,6 @@
       // Listen for form submission
       $('#applicantForm').on('submit', function(e) {
         // Prevent default form submission behavior
-        e.preventDefault();
         // Display success modal
         $('#successModal').modal('show');
       });

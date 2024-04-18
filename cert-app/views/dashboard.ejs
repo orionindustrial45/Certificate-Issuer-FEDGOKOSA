@@ -10,6 +10,10 @@
     #noApplicationsMessage {
       display: none;
     }
+    .spinner-border-sm {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -25,6 +29,7 @@
             <th>Name</th>
             <th>Date Applied</th>
             <th>Graduation Year</th>
+            <th>Email</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -33,7 +38,7 @@
         </tbody>
       </table>
     </div>
-    <div class="alert alert-info mt-3" id="noApplicationsMessage" role="alert">
+    <div class="alert alert-info mt-3" style="background-color: #168E85 !important; color:#fff" id="noApplicationsMessage" role="alert" >
       No applications currently.
     </div>
   </div>
@@ -77,13 +82,29 @@
                   '<td>' + applicant.firstName + ' ' + applicant.lastName + '</td>' +
                   '<td>' + formatDate(applicant.createdAt) + '</td>' +
                   '<td>' + applicant.graduationYear + '</td>' +
-                  '<td><button class="btn btn-primary" style="background-color: #168E85 !important;">Approve</button></td>' +
+                  '<td>' + applicant.email + '</td>' +
+                  '<td><button class="btn btn-primary action-btn" style="background-color: #168E85 !important;" data-id="' + applicant._id + '">Issue Certificate</button> <div class="spinner-border text-light spinner-border-sm d-none" role="status"><span class="sr-only">Loading...</span></div></td>' +
                   '</tr>';
         $('#applicantTable').append(row);
       });
 
       // Show/hide message based on table content
       checkIfTableEmpty();
+
+      // Attach event listener to action buttons
+      $('.action-btn').click(function() {
+        var applicantId = $(this).data('id');
+        var button = $(this);
+        button.prop('disabled', true); // Disable the button
+        button.find('.spinner-border').removeClass('d-none'); // Show the spinner
+
+        performAction(applicantId, function() {
+          button.prop('disabled', false); // Enable the button
+          button.find('.spinner-border').addClass('d-none'); // Hide the spinner
+          fetchData(); // Reload the table
+        });
+      });
+
     }
 
     function formatDate(dateString) {
@@ -100,6 +121,29 @@
         $('#applicantTableContainer').show();
         $('#noApplicationsMessage').hide();
       }
+    }
+
+    function performAction(applicantId, callback) {
+      // Make a POST request to your action endpoint with the applicant ID
+      $.ajax({
+        url: `/api/certificates/${applicantId}/issue`,
+        method: 'POST',
+        data: { applicantId: applicantId },
+        success: function(response) {
+          // Handle success response
+          console.log('Action performed successfully:', response);
+          if (typeof callback === 'function') {
+            callback();
+          }
+        },
+        error: function(xhr, status, error) {
+          // Handle error response
+          console.error('Error performing action:', error);
+          if (typeof callback === 'function') {
+            callback();
+          }
+        }
+      });
     }
   </script>
 </body>

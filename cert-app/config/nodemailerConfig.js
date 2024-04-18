@@ -1,6 +1,8 @@
 // nodemailerConfig.js
-
+import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+
+dotenv.config()
 
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -9,8 +11,8 @@ const transporter = nodemailer.createTransport({
     secure: true,
     service: 'Gmail',
     auth: {
-        user: 'hilarytn@gmail.com',//process.env.gmail, // Your Gmail email address
-        pass:  'aqyt kcpx vfuq gesg' //process.env.gmail_pass, // Your Gmail password or app password
+        user: process.env.gmail,//'hilarytn@gmail.com',//, // Your Gmail email address
+        pass:  process.env.gmail_pass//'aqyt kcpx vfuq gesg' //process.env.gmail_pass, // Your Gmail password or app password
     },
 });
 

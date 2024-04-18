@@ -20,8 +20,10 @@ export const createApplication = async (req, res) => {
     // Save the application to the database
     const application = await newApplication.save();
 
+    res.render('success')
     // Respond with success message
-    res.status(201).json({ success: true, message: 'Application submitted successfully', data: application });
+    //res.status(201).json({ success: true, message: 'Application submitted successfully', data: application });
+    
   } catch (error) {
     console.error(error);
     // If an error occurs, respond with error message
