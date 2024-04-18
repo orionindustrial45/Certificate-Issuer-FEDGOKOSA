@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .signup-container {
+      max-width: 500px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="card signup-container">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-4">Sign Up</h2>
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Enter first name" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Enter last name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" class="form-control" id="dob" required>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number" required>
+          </div>
+          <div class="form-group">
+            <label for="regType">Choose one:</label><br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="regType" id="waec" value="waec">
+              <label class="form-check-label" for="waec">WAEC</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="regType" id="neco" value="neco">
+              <label class="form-check-label" for="neco">NECO</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regNumber">Registration Number:</label>
+            <input type="text" class="form-control" id="regNumber" placeholder="Enter registration number">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#signupForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent form submission
+        // Basic form validation
+        var firstName = $('#firstName').val().trim();
+        var lastName = $('#lastName').val().trim();
+        var email = $('#email').val().trim();
+        var dob = $('#dob').val().trim();
+        var phoneNumber = $('#phoneNumber').val().trim();
+        var regType = $('input[name="regType"]:checked').val();
+        var regNumber = $('#regNumber').val().trim();
+
+        if (firstName !== '' && lastName !== '' && dob !== '' && phoneNumber !== '') {
+          // If form is valid, send data to API endpoint or perform necessary actions
+          console.log('Form submitted successfully!');
+          console.log('First Name:', firstName);
+          console.log('Last Name:', lastName);
+          console.log('Email:', email);
+          console.log('Date of Birth:', dob);
+          console.log('Phone Number:', phoneNumber);
+          console.log('Registration Type:', regType);
+          console.log('Registration Number:', regNumber);
+        } else {
+          // If form is invalid, show error message
+          alert('Please fill in all required fields.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

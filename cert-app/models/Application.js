@@ -11,8 +11,7 @@ const applicationSchema = new Schema({
     required: true
   },
   otherName: {
-    type: String,
-    required: true
+    type: String
   },
   lastName: {
     type: String,
@@ -32,6 +31,9 @@ const applicationSchema = new Schema({
     default: 'pending'
   },
   approvalDate: {
+    type: Date
+  },
+  issueDate: {
     type: Date
   },
   createdAt: {

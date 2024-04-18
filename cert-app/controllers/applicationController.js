@@ -29,6 +29,21 @@ export const createApplication = async (req, res) => {
   }
 };
 
+ // Controller function to retrieve a list of approved applicants
+ export const getApplicants = async (req, res) => {
+  try {
+    // Find all applications with status "approved"
+    const applicants = await Application.find({ status: 'pending' });
+
+    // Respond with the list of approved applicants
+    res.status(200).json({ success: true, applicants });
+  } catch (error) {
+    console.error(error);
+    // If an error occurs, respond with error message
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
 // Controller function to approve an application
 export const approveApplication = async (req, res) => {
     try {
@@ -66,6 +81,21 @@ export const approveApplication = async (req, res) => {
   
       // Respond with the list of approved applicants
       res.status(200).json({ success: true, approvedApplicants });
+    } catch (error) {
+      console.error(error);
+      // If an error occurs, respond with error message
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  };
+
+   // Controller function to retrieve a list of issued applicants
+   export const getIsssuedApplicants = async (req, res) => {
+    try {
+      // Find all applications with status "approved"
+      const issuedApplicants = await Application.find({ status: 'issued' });
+  
+      // Respond with the list of approved applicants
+      res.status(200).json({ success: true, issuedApplicants });
     } catch (error) {
       console.error(error);
       // If an error occurs, respond with error message

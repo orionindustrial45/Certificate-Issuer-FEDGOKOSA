@@ -4,6 +4,7 @@ import session from 'express-session';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import applicationRoutes from './routes/applicationRoutes.js'
+import issueCertificate from  './routes/certificateRoutes.js'
 import connectDB from './config/db.js';
 import passportConfig from './config/passportConfig.js';
 
@@ -18,6 +19,7 @@ connectDB()
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -34,6 +36,11 @@ passportConfig(passport);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/user', applicationRoutes);
+app.use('/api', issueCertificate)
+
+app.get('/FEDGOKOSA/certifcate/apply', (req, res) => {
+  res.render('applicant-form')
+})
 
 //app.use('/api/certificates', certificateRoutes);
 
