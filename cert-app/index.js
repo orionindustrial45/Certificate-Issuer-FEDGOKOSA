@@ -8,6 +8,7 @@ import issueCertificate from  './routes/certificateRoutes.js'
 import connectDB from './config/db.js';
 import passportConfig from './config/passportConfig.js';
 import { getApplicants } from './controllers/applicationController.js';
+import {authenticate}  from './middleware/authMiddleware.js';
 
 
 //import certificateRoutes from './routes/certificateRoutes.js';
