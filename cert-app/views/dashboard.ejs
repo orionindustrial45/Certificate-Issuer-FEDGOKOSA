@@ -114,7 +114,7 @@
 
     function checkIfTableEmpty() {
       var tableRows = $('#applicantTable tr').length;
-      if (tableRows <= 1) {
+      if (tableRows == 0) {
         $('#applicantTableContainer').hide();
         $('#noApplicationsMessage').show();
       } else {
