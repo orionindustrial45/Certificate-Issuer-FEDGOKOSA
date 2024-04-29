@@ -7,7 +7,7 @@ import * as authController from '../controllers/authController.js';
 //import {authenticate}  from '../middleware/authMiddleware.js';
 
 // User registration route
-router.post('/register', authenticate, authController.register);
+router.post('/register', authController.register);
 
 // User login route
 router.post('/login', authController.login);
