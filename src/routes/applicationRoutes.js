@@ -8,7 +8,7 @@ import {
     getApplicants, 
     getIsssuedApplicants 
 } from '../controllers/applicationController.js';
-import { authenticate} from '..//middleware/authMiddleware.js'
+//import { authenticate} from '..//middleware/authMiddleware.js'
 
 const router = express.Router();
 
@@ -19,10 +19,10 @@ router.post('/applications', createApplication);
 router.get('/get-applicants', getApplicants);
 
 // Route to approve an application by ID
-router.patch('/applications/:id/approve', authenticate, approveApplication);
+router.patch('/applications/:id/approve', approveApplication);
 
 // Route to retrieve a list of approved applicants
-router.get('/approved-applicants', authenticate, getApprovedApplicants);
+router.get('/approved-applicants', getApprovedApplicants);
 
 //Route to retrieve a list of issued applicants
 router.get('/issued-applicants', getIsssuedApplicants)
